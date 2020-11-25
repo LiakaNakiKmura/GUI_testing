@@ -18,4 +18,4 @@ from context import src # path setting
 from testing_utility.unittest_util import cls_startstop_msg as add_msg
 
 from src.interface.up_down import (Abs_XY_Calc)
-from src.calc.xy_calc import XY_Calc
+from src.utility.mediator import Mediated
