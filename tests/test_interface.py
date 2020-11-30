@@ -26,9 +26,13 @@ class TestForMethodExist():
     Check that class has specified method for especially abstract class.
     _class_method_pairs is set as ((class1, mrthod1),(class2, method2)...)
     _class_attr_pairs is set as ((class1, attribute1),(class2, attribute2)...)
+    
+    _class_instanceattr_pairs is set as ((class1, attribute1),(class2, attribute2)...)
+    
     '''
     _class_method_pairs =(())
     _class_attr_pairs = (())
+    _class_instanceattr_pairs = (())
     
     def test_class_method_pairs(self):
         for cl, mth in self._class_method_pairs:
@@ -37,6 +41,12 @@ class TestForMethodExist():
     def test_class_attr_pairs(self):
         for cl, attr in self._class_attr_pairs:
             self.assertTrue(hasattr(cl, attr))
+
+    def test_instance_attr_pairs(self):
+        for cl, attr in self._class_instanceattr_pairs:
+            self.assertTrue(hasattr(cl(), attr))
+
+
 
 @add_msg
 class TestCreaterInterfaces(TestForMethodExist, unittest.TestCase):
