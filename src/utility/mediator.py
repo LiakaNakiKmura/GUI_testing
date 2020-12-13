@@ -12,16 +12,35 @@ import abc
 # Original module  
 
 class Mediator(object):
-    def on_change(self):
-        pass
+    def __init__(self):
+        self._pairs = {}
+    
+    def on_change(self, caller, *args, **kargs):
+        print('Mediator Called')
+        callee = self._pairs[caller]
+        print(callee)
+        callee.on_change(*args, **kargs)
+    
+    def add_callee_caller_pairs(self, callee : 'Callee', caller : 'Caller')\
+        -> None:
+        if not isinstance(callee, Callee):
+            raise TypeError('callee must be instance of Callee')
+        elif not isinstance(caller, Caller):
+            raise TypeError('caller must be instance of Caller')
+        
+        self._pairs[caller] = callee
+        caller.mediator = self         
 
 class Caller(metaclass = abc.ABCMeta): 
     def __init__(self):
         self._mediator = None
         # Public variables
         
-    def on_change(self) -> None:
-        pass
+    def on_change(self, *args, **kargs) -> None:
+        # Call mediator to pass the data to callee.
+        
+        if self._mediator is not None:
+            self._mediator.on_change(self, *args, **kargs)
     
     @property
     def mediator(self) -> Mediator:
@@ -35,10 +54,5 @@ class Caller(metaclass = abc.ABCMeta):
 
     
 class Callee(metaclass = abc.ABCMeta): 
-    def on_change(self):
+    def on_change(self, *args, **kargs):
         pass
-    
-class Foo:
-    @property
-    def x(self, var):
-        assert ()
