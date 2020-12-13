@@ -24,7 +24,7 @@ from src.utility.mediator import (Caller, Mediator, Callee)
 class TestMediatorInterfaces(TestForMethodExist, unittest.TestCase):
     _class_method_pairs=((Caller,'on_change'),
                          (Mediator, 'on_change'),
-                         (Mediator, 'add_callee_caller_pairs'),
+                         (Mediator, 'add_caller_callee_pairs'),
                          (Callee, 'on_change')
                          )
     _class_instanceattr_pairs = ((Caller, 'mediator'), 
@@ -60,16 +60,16 @@ class TestMediator(unittest.TestCase):
     
     def test_mediator_set_pairs(self):
         '''
-        Test validation on add_callee_caller_pairs
+        Test validation on add_caller_callee_pairs
         '''
         
         class Foo: pass
         f = Foo()
-        bad_pairs = ((f,self.caller), (self.callee, f))
+        bad_pairs = ((f,self.callee), (self.caller, f))
         for d in bad_pairs:
             with self.assertRaises(TypeError):
-                self.mediator.add_callee_caller_pairs(*d)
-        self.mediator.add_callee_caller_pairs(self.callee, self.caller)
+                self.mediator.add_caller_callee_pairs(*d)
+        self.mediator.add_caller_callee_pairs(self.caller, self.callee)
         
         # TODO: add test to same caller is not allowed:
         
@@ -80,7 +80,7 @@ class TestMediator(unittest.TestCase):
         If Caller is on_change with args, kargs, Callee is on_change with args,
         kargs.        
         '''
-        self.mediator.add_callee_caller_pairs(self.callee, self.caller)
+        self.mediator.add_caller_callee_pairs(self.caller, self.callee)
         input_data = tuple(range(20))
         self.caller.on_change(*input_data)
         self.assertEqual(self.callee.args, input_data)

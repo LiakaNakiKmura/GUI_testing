@@ -21,7 +21,7 @@ class Mediator(object):
         print(callee)
         callee.on_change(*args, **kargs)
     
-    def add_callee_caller_pairs(self, callee : 'Callee', caller : 'Caller')\
+    def add_caller_callee_pairs(self, caller : 'Caller', callee : 'Callee')\
         -> None:
         if not isinstance(callee, Callee):
             raise TypeError('callee must be instance of Callee')
