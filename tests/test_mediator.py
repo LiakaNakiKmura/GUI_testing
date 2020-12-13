@@ -19,6 +19,7 @@ from testing_utility.unittest_util import cls_startstop_msg as add_msg
 
 from test_interface import TestForMethodExist
 from src.utility.mediator import (Caller, Mediator, Callee)
+from src.interface.warning import (ValueWarning)
 
 @add_msg
 class TestMediatorInterfaces(TestForMethodExist, unittest.TestCase):
@@ -84,7 +85,8 @@ class TestMediator(unittest.TestCase):
         new_callee = MockCallee()
         
         #TODO: Add waring when the same caller is set again.
-        self.mediator.add_caller_callee_pairs(self.caller, new_callee)
+        with self.assertWarns(ValueWarning):
+            self.mediator.add_caller_callee_pairs(self.caller, new_callee)
         input_data2 = ('2nd call',)
         self.caller.on_change(*input_data2)
         self.assertEqual(new_callee.args, input_data2)

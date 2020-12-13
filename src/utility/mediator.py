@@ -6,10 +6,12 @@ Created on Mon Nov 23 20:34:06 2020
 """
 # Standard module
 import abc
+import warnings
 
 # 3rd party's module
 
 # Original module  
+from src.interface.warning import (ValueWarning)
 
 class Mediator(object):
     def __init__(self):
@@ -27,6 +29,9 @@ class Mediator(object):
             raise TypeError('callee must be instance of Callee')
         elif not isinstance(caller, Caller):
             raise TypeError('caller must be instance of Caller')
+        if caller in self._pairs.keys():
+            warnings.warn('{} is already assigned to mediator'.format(caller), 
+                          ValueWarning)
         
         self._pairs[caller] = callee
         caller.mediator = self         
