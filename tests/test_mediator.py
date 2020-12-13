@@ -60,7 +60,7 @@ class TestMediator(unittest.TestCase):
     
     def test_mediator_set_pairs(self):
         '''
-        Test validation on add_caller_callee_pairs
+        Test validation on add_caller_callee_pairs.
         '''
         
         class Foo: pass
@@ -70,8 +70,25 @@ class TestMediator(unittest.TestCase):
             with self.assertRaises(TypeError):
                 self.mediator.add_caller_callee_pairs(*d)
         self.mediator.add_caller_callee_pairs(self.caller, self.callee)
+    
+    def test_mediator_repeat_set_pairs(self):
+        '''
+        Overwrite pairs if same caller is set to mediator.
+        Raise waring Overwrote pairs.
+        '''
+        self.mediator.add_caller_callee_pairs(self.caller, self.callee)
+        input_data1 = ('1st call',)
+        self.caller.on_change(*input_data1)
+        self.assertEqual(self.callee.args, input_data1)
         
-        # TODO: add test to same caller is not allowed:
+        new_callee = MockCallee()
+        
+        #TODO: Add waring when the same caller is set again.
+        self.mediator.add_caller_callee_pairs(self.caller, new_callee)
+        input_data2 = ('2nd call',)
+        self.caller.on_change(*input_data2)
+        self.assertEqual(new_callee.args, input_data2)
+        
         
     def test_mediator_relation(self):
         '''
