@@ -25,16 +25,41 @@ class Mediator(object):
     
     def add_caller_callee_pairs(self, caller : 'Caller', callee : 'Callee')\
         -> None:
+        '''
+        Parameters
+        ----------
+        caller : 'Caller'
+            instance of Caller object. This calls mediator.on_change 
+        callee : 'Callee'
+            instance of Callee object. This is called if caller is on_change
+
+        Returns
+        -------
+        None
+        '''
+        
+        self._validate_caller(caller)   
+        self._validate_callee(callee)
+             
+        self._pairs[caller] = callee
+        caller.mediator = self
+        
+    def _validate_callee(self, callee : 'Callee') -> None:
         if not isinstance(callee, Callee):
             raise TypeError('callee must be instance of Callee')
-        elif not isinstance(caller, Caller):
+    
+    def _validate_caller(self, caller : 'Caller') -> None:
+        '''
+        caller must be instance of Caller.
+        Warn if caller is already exist in self._pairs.
+        '''
+        
+        if not isinstance(caller, Caller):
             raise TypeError('caller must be instance of Caller')
         if caller in self._pairs.keys():
             warnings.warn('{} is already assigned to mediator'.format(caller), 
                           ValueWarning)
-        
-        self._pairs[caller] = callee
-        caller.mediator = self         
+            
 
 class Caller(metaclass = abc.ABCMeta): 
     def __init__(self):

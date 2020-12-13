@@ -53,6 +53,10 @@ class TestMediator(unittest.TestCase):
         self.callee = MockCallee()
     
     def test_validate_mediator_setup(self):
+        '''
+        caller.mediator must be instance of Mediator.
+        '''
+        
         bad_data = [0, 'a', [], {1:2}, None, lambda x: 0 ]
         for d in bad_data:
             with self.assertRaises(TypeError):
