@@ -14,13 +14,16 @@ import warnings
 from src.interface.warning import (ValueWarning)
 
 class Mediator(object):
+    '''
+    This mediate from caller to callee.
+    User set caller and callee pairs.
+    If caller is on_change mediator will call callee.
+    '''
     def __init__(self):
         self._pairs = {}
     
     def on_change(self, caller, *args, **kargs):
-        print('Mediator Called')
         callee = self._pairs[caller]
-        print(callee)
         callee.on_change(*args, **kargs)
     
     def add_caller_callee_pairs(self, caller : 'Caller', callee : 'Callee')\
@@ -37,7 +40,6 @@ class Mediator(object):
         -------
         None
         '''
-        
         self._validate_caller(caller)   
         self._validate_callee(callee)
              
@@ -68,7 +70,6 @@ class Caller(metaclass = abc.ABCMeta):
         
     def on_change(self, *args, **kargs) -> None:
         # Call mediator to pass the data to callee.
-        
         if self._mediator is not None:
             self._mediator.on_change(self, *args, **kargs)
     
