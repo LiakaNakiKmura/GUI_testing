@@ -33,14 +33,12 @@ class TestMediatorInterfaces(TestForMethodExist, unittest.TestCase):
 
 class MockCallee(Callee):
     def on_change(self, *args, **kargs):
-        print('Callee Called')
         self.args = args
         self.kargs = kargs
 
 
 class MockCaller(Caller):
     def on_change(self, *args, **kargs):
-        print('Caller Called')
         super().on_change(*args, **kargs)
         
 # Test that if Caller call on change, colleage obj is called. 
@@ -66,6 +64,8 @@ class TestMediator(unittest.TestCase):
     def test_mediator_set_pairs(self):
         '''
         Test validation on add_caller_callee_pairs.
+        caller must be instance of Caller
+        callee must be instance of Callee
         '''
         
         class Foo: pass
@@ -88,7 +88,7 @@ class TestMediator(unittest.TestCase):
         
         new_callee = MockCallee()
         
-        #TODO: Add waring when the same caller is set again.
+        # Test overwrite.
         with self.assertWarns(ValueWarning):
             self.mediator.add_caller_callee_pairs(self.caller, new_callee)
         input_data2 = ('2nd call',)

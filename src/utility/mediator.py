@@ -82,7 +82,7 @@ class Caller(metaclass = abc.ABCMeta):
         if not isinstance(_mediator, Mediator):
             raise TypeError('Caleer.mediator must be instance of Mediator')
         self._mediator = _mediator
-
+    
     
 class Callee(metaclass = abc.ABCMeta): 
     def on_change(self, *args, **kargs):

@@ -48,3 +48,4 @@ class TF_Maker(metaclass = abc.ABCMeta):
         Return the transfer function class (scipy.signal.lti).  
         '''
         return None
+

@@ -63,3 +63,7 @@ class Abs_UI_Creater(metaclass = abc.ABCMeta):
     # Validation Canvas object that is the graph object.
     def _validate_canvas(self, canvas):
         pass
+
+class Abs_Fig_Box_Creater(metaclass = abc.ABCMeta):pass
+
+class Abs_Cmd_Processer(metaclass = abc.ABCMeta):pass
