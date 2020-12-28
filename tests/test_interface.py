@@ -64,7 +64,9 @@ class TestCreaterInterfaces(TestForMethodExist, unittest.TestCase):
     _class_attr_pairs = ((Abs_UI_Creater, 'canvas'), # Property object.
                          (Abs_XY_Graph_Creater, 'canvas')
                          )
+
     
+
     
     
 if __name__=='__main__':

@@ -10,7 +10,8 @@ import abc
 
 # 3rd party's module
 
-# Original module  
+# Original module
+from src.utility.mediator import (Caller, Callee)
 
 class Abs_XY_Graph_Creater(metaclass = abc.ABCMeta):
     _canvas = None
@@ -64,6 +65,17 @@ class Abs_UI_Creater(metaclass = abc.ABCMeta):
     def _validate_canvas(self, canvas):
         pass
 
-class Abs_Fig_Box_Creater(metaclass = abc.ABCMeta):pass
+class Abs_Fig_Box_Creater(metaclass = abc.ABCMeta):
+    @abc.abstractmethod
+    def get_fig_updater(self) -> Callee: 
+        pass
+    
+    @abc.abstractmethod
+    def get_up_caller(self) -> Caller:
+        pass
+    
+    @abc.abstractmethod
+    def get_down_caller(self) -> Caller:
+        pass
 
 class Abs_Cmd_Processer(metaclass = abc.ABCMeta):pass
