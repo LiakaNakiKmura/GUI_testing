@@ -60,10 +60,19 @@ class TestCMD_PRCR(object):
     Test FigboxCreater class. This class will be inherited to test the concrete
     class of FigboxCreater.
     '''
-    _CMD_PRCR_class = None
     
     def setUp(self):
+        self.overwrite_in_inherated_class()
         self.cmd_pro = self._CMD_PRCR_class()
+        
+        
+    def overwrite_in_inherated_class(self):
+        '''
+        overwrite this method in inherated class to set target class or method
+        or etc... to test.
+        '''
+        self._CMD_PRCR_class = None # Replcae Command Processer class
+        
         
     
     def test_inheritance(self):
@@ -72,9 +81,8 @@ class TestCMD_PRCR(object):
     
     def test_inheritance_of_getter(self):
         # Command processer returns Callee and Caller.
-        # TODO: ADD inheritance
-        #self.assertTrue(isinstance(self.cmd_pro.get_fig_data_inputer(), 
-        #                           FigDataInputer))
+        self.assertTrue(isinstance(self.cmd_pro.get_fig_data_inputer(),
+                                   FigDataInputer))
         self.assertTrue(isinstance(self.cmd_pro.get_up_cmd(), Callee))
         self.assertTrue(isinstance(self.cmd_pro.get_down_cmd(), Callee))
 
@@ -124,11 +132,11 @@ class TestFigDataInputer(unittest.TestCase):
         mediator.add_caller_callee_pairs(self.fdi, self.mock_callee)
     
     def create_common_val(self):
-        self._x_arg_name = 'x' 
         # x argument name from Fig Data inputer to Fig Updater. 
+        self._x_arg_name = 'x' 
         
-        self._y_arg_name = 'y' 
         # y argument name from Fig Data inputer to Fig Updater.
+        self._y_arg_name = 'y' 
         
         
     def test_inheritance_of_FigDataInputer(self):
@@ -140,6 +148,7 @@ class TestFigDataInputer(unittest.TestCase):
         x: np.ndarray (1D)
         y: np.ndarray (1D)
         number of x is the same as one of y.
+        
         '''
         
         length = 5

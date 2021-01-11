@@ -21,7 +21,8 @@ from src.utility.mediator import (Caller, Callee)
 
 @add_msg
 class TestCMD_PRCR_interface(TestCMD_PRCR, unittest.TestCase):
-    _CMD_PRCR_class = Up_Down_CMD_PRCR
+    def overwrite_in_inherated_class(self):
+        self._CMD_PRCR_class = Up_Down_CMD_PRCR
     
     
 @add_msg

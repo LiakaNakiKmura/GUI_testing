@@ -10,6 +10,7 @@ Created on Sun Dec 27 20:55:31 2020
 
 # Original module  
 from src.interface.up_down import (Abs_Cmd_Processer)
+from src.utility.figdatacombiner import (FigDataInputer)
 from src.utility.mediator import (Caller, Callee)
 
 class Up_Down_CMD_PRCR(Abs_Cmd_Processer):
@@ -28,6 +29,5 @@ class Up_Down_CMD_PRCR(Abs_Cmd_Processer):
     def get_down_cmd(self) -> Callee: 
         return self._down_cmd
 
-class FigDataInputer(Caller):pass
 class UpCmd(Callee):pass
 class DownCmd(Callee):pass
