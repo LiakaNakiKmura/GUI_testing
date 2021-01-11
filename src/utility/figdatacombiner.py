@@ -14,8 +14,27 @@ from src.utility.mediator import (Caller)
 
 
 class FigDataInputer(Caller):
-    def set_graph_data(self):
-        pass
+    '''
+    '''
+    
+    def set_graph_data(self, x, y):
+        '''
+        
+
+        Parameters
+        ----------
+        x : TYPE
+            DESCRIPTION.
+        y : TYPE
+            DESCRIPTION.
+
+        Returns
+        -------
+        None.
+
+        '''
+        self._x = x
+        self._y = y
     
     def update_graph(self):
-        pass
+        self.on_change(x = self._x, y = self._y)

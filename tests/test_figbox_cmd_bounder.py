@@ -10,6 +10,7 @@ from unittest.mock import patch
 
 # 3rd party's module
 import numpy as np
+from numpy.testing import assert_array_equal
 
 # Original module  
 from context import src # path setting
@@ -103,6 +104,12 @@ class Test_FigBox_CombinedTest():
         self.assertTrue(isinstance(self.fdi, FigDataInputer))
 
 
+@add_msg
+class TestFigDataInputer_instance(TestForMethodExist, unittest.TestCase):
+    _class_method_pairs=((FigDataInputer, 'set_graph_data'),
+                         (FigDataInputer, 'update_graph')
+                         )
+
 class TestFigDataInputer(unittest.TestCase):
         
     
@@ -127,11 +134,47 @@ class TestFigDataInputer(unittest.TestCase):
     def test_inheritance_of_FigDataInputer(self):
         self.assertTrue(issubclass(FigDataInputer, Caller))
         
-    def test_input_data_validation(self):
-        pass
+    def _test_input_data_validation(self):
+        '''
+        FigDataInputer allows following inputs
+        x: np.ndarray (1D)
+        y: np.ndarray (1D)
+        number of x is the same as one of y.
+        '''
+        
+        length = 5
+        
+        # name error
+        inputkargs1 = {'wrong name':np.random.rand(length), 
+                     self._y_arg_name:np.random.rand(length)}
+        
+        # wrong input data number
+        inputkargs2 = {self._x_arg_name:np.random.rand(length), 
+                     self._y_arg_name:np.random.rand(length),
+                     'wrong name':np.random.rand(length)}
+        
+        for inputkargs in (inputkargs1, inputkargs2):
+            self.input_data_with_error(**inputkargs)
+                
+    
+    def input_data_with_error(self, *args, **kargs):
+        self.assertRaises(TypeError, self.fdi.set_graph_data,*args, **kargs)
     
     def test_input_data_pass_to_callee(self):
-        pass
+        '''
+        If correct data is set to FigureDataInputer and updated, mock callee 
+        get data.
+        '''
+        
+        length = 10
+        x = np.arange(length)
+        y = np.arange(length)**2 
+        
+        self.fdi.set_graph_data(x,y)
+        self.fdi.update_graph()
+        data = self.mock_callee.kargs
+        assert_array_equal(data[self._x_arg_name], x)
+        assert_array_equal(data[self._y_arg_name], y)
     
     """
     def _test_fig_data_inputer_value(self):
@@ -193,11 +236,6 @@ class TestFigDataInputer(unittest.TestCase):
         self.assertTrue(self._x_data.shape == self._y_data.shape)
     """
 
-@add_msg
-class TestFigDataInputer_instance(TestForMethodExist, unittest.TestCase):
-    _class_method_pairs=((FigDataInputer, 'set_graph_data'),
-                         (FigDataInputer, 'update_graph')
-                         )
 
 
 
