@@ -110,8 +110,8 @@ class TestFigDataInputer_instance(TestForMethodExist, unittest.TestCase):
                          (FigDataInputer, 'update_graph')
                          )
 
+@add_msg
 class TestFigDataInputer(unittest.TestCase):
-        
     
     def setUp(self):
         self.create_instances()
@@ -134,7 +134,7 @@ class TestFigDataInputer(unittest.TestCase):
     def test_inheritance_of_FigDataInputer(self):
         self.assertTrue(issubclass(FigDataInputer, Caller))
         
-    def _test_input_data_validation(self):
+    def test_input_data_validation(self):
         '''
         FigDataInputer allows following inputs
         x: np.ndarray (1D)
@@ -143,22 +143,45 @@ class TestFigDataInputer(unittest.TestCase):
         '''
         
         length = 5
+        inputkargs_data =[]
         
         # name error
-        inputkargs1 = {'wrong name':np.random.rand(length), 
-                     self._y_arg_name:np.random.rand(length)}
+        inputkargs_data.append([TypeError,\
+                                {'wrong name':np.random.rand(length),
+                                 self._y_arg_name:np.random.rand(length)}])
         
         # wrong input data number
-        inputkargs2 = {self._x_arg_name:np.random.rand(length), 
-                     self._y_arg_name:np.random.rand(length),
-                     'wrong name':np.random.rand(length)}
+        inputkargs_data.append([TypeError,\
+                                {self._x_arg_name:np.random.rand(length),
+                                 self._y_arg_name:np.random.rand(length),
+                                 'wrong name':np.random.rand(length)}])
         
-        for inputkargs in (inputkargs1, inputkargs2):
-            self.input_data_with_error(**inputkargs)
+        
+        # wrong data types1
+        inputkargs_data.append([TypeError,\
+                               {self._x_arg_name:1,
+                                self._y_arg_name:np.random.rand(length)}])
+        inputkargs_data.append([TypeError,\
+                                {self._x_arg_name:np.random.rand(length), 
+                                 self._y_arg_name:[3,4,5]}])
+        
+        # wrong length data
+        inputkargs_data.append([ValueError,\
+                                {self._x_arg_name:np.random.rand(length), 
+                                 self._y_arg_name:np.random.rand(length+3)}])
+        
+        # set2D data
+        inputkargs_data.append([ValueError,\
+                                {self._x_arg_name:np.random.rand(length, length),
+                                 self._y_arg_name:np.random.rand(length, length)}])
+
+        
+        for error, inputkargs in inputkargs_data:
+            self.input_data_with_error(error, **inputkargs)
                 
     
-    def input_data_with_error(self, *args, **kargs):
-        self.assertRaises(TypeError, self.fdi.set_graph_data,*args, **kargs)
+    def input_data_with_error(self, error, *args, **kargs):
+        self.assertRaises(error, self.fdi.set_graph_data,*args, **kargs)
     
     def test_input_data_pass_to_callee(self):
         '''
@@ -170,75 +193,21 @@ class TestFigDataInputer(unittest.TestCase):
         x = np.arange(length)
         y = np.arange(length)**2 
         
+        # Check args set case.
         self.fdi.set_graph_data(x,y)
+        self.updata_and_check_data(x, y)
+        
+        # Check kargs set case.
+        data = {self._x_arg_name:x, self._y_arg_name:y}
+        self.fdi.set_graph_data(**data)
+        self.updata_and_check_data(x, y)
+        
+    
+    def updata_and_check_data(self, x, y):
         self.fdi.update_graph()
         data = self.mock_callee.kargs
         assert_array_equal(data[self._x_arg_name], x)
         assert_array_equal(data[self._y_arg_name], y)
-    
-    """
-    def _test_fig_data_inputer_value(self):
-        '''
-        fdi pass the data of x, y data.
-        x is np.ndarray
-        y is np.ndarray
-        
-        Callee get (x, y) data.
-        '''
-        number_of_data = 2 # x and y
-        
-        self.set_graph_data()
-        self.fdi.update_graph()
-        
-        if len(self.mock_callee.args) > 0:
-            data = self.mock_callee.args
-            self.assertTrue(len(data) == number_of_data)
-            self.check_data_val(data)
-        
-        else:
-            data = self.mock_callee.kargs
-            self.assertTrue(len(data) == number_of_data)
-            self.assertTrue(self.x_arg_name in data.keys())
-            self.assertTrue(self.y_arg_name in data.keys())
-            self.check_data_val(data[self.x_arg_name, self.y_arg_name])
-    
-    def get_data_from_mock_callee(self):
-        # get data passed from fig data inputer to mock callee
-        
-        number_of_data = 2 # x and y
-        args = self.mock_callee.args
-        kargs = self.mock_callee.kargs
-    
-        
-        if len(args) > 0:
-            self.assertTrue(len(args) == number_of_data)
-            self._x_data = args[0]
-            self._y_data = args[1]
-        
-        elif len(kargs) > 0 :
-            self.assertTrue(len(kargs) == number_of_data)
-            self._x_data = kargs[self._x_arg_name]
-            self._y_data = kargs[self._y_arg_name]
-            
-        else:
-            self.fail('correct data is not input')
-        
-    
-    def check_data_val(self):
-        for data in (self._x_data, self._y_data):
-            # Data must be ndarray data.
-            self.assertTrue(isinstance(data, np.ndarray))          
-                
-            # Data must be 1D (not matrix).
-            self.assertTrue(data.ndim == 1 )
-                
-        # Data length must be same between x, y
-        self.assertTrue(self._x_data.shape == self._y_data.shape)
-    """
-
-
-
-
 
 if __name__=='__main__':
     unittest.main()
