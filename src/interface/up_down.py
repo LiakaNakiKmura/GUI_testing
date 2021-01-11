@@ -78,4 +78,16 @@ class Abs_Fig_Box_Creater(metaclass = abc.ABCMeta):
     def get_down_caller(self) -> Caller:
         pass
 
-class Abs_Cmd_Processer(metaclass = abc.ABCMeta):pass
+class Abs_Cmd_Processer(metaclass = abc.ABCMeta):
+    @abc.abstractmethod
+    def get_fig_data_inputer(self) -> Caller: 
+        pass
+        
+    @abc.abstractmethod
+    def get_up_cmd(self) -> Callee: 
+        pass
+        
+    @abc.abstractmethod
+    def get_down_cmd(self) -> Callee: 
+        pass
+    
