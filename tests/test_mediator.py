@@ -20,13 +20,14 @@ from src.interface.warning import (ValueWarning)
 
 @add_msg
 class TestMediatorInterfaces(TestForMethodExist, unittest.TestCase):
-    _class_method_pairs=((Caller,'on_change'),
-                         (Mediator, 'on_change'),
-                         (Mediator, 'add_caller_callee_pairs'),
-                         (Callee, 'on_change')
-                         )
-    _class_instanceattr_pairs = ((Caller, 'mediator'), 
-                         )
+    def class_attr_pairs_initialize(self):
+        self._class_method_pairs=((Caller,'on_change'),
+                                  (Mediator, 'on_change'),
+                                  (Mediator, 'add_caller_callee_pairs'),
+                                  (Callee, 'on_change')
+                                  )
+        self._class_instanceattr_pairs = ((Caller, 'mediator'), 
+                                          )
 
 class MockCallee(Callee):
     def on_change(self, *args, **kargs):

@@ -27,13 +27,14 @@ from test_mediator import MockCallee
 
 @add_msg
 class TestCommandBounderInterfaces(TestForMethodExist, unittest.TestCase):
-    _class_method_pairs=((Abs_Fig_Box_Creater, 'get_fig_updater'),
-                         (Abs_Fig_Box_Creater, 'get_up_caller'),
-                         (Abs_Fig_Box_Creater, 'get_down_caller'),
-                         (Abs_Cmd_Processer, 'get_fig_data_inputer'),
-                         (Abs_Cmd_Processer, 'get_up_cmd'),
-                         (Abs_Cmd_Processer, 'get_down_cmd')
-                         )
+    def class_attr_pairs_initialize(self):
+        self._class_method_pairs=((Abs_Fig_Box_Creater, 'get_fig_updater'),
+                                  (Abs_Fig_Box_Creater, 'get_up_caller'),
+                                  (Abs_Fig_Box_Creater, 'get_down_caller'),
+                                  (Abs_Cmd_Processer, 'get_fig_data_inputer'),
+                                  (Abs_Cmd_Processer, 'get_up_cmd'),
+                                  (Abs_Cmd_Processer, 'get_down_cmd')
+                                  )
 
 
 
@@ -42,7 +43,18 @@ class TestFigBoxCreater(object):
     Test FigboxCreater class. This class will be inherited to test the concrete
     class of FigboxCreater.
     '''
-    _FigBoxCreater_class = None
+    #_FigBoxCreater_class = None
+    
+    def setUp(self):
+        self.overwrite_in_inherated_class()
+        
+        
+    def overwrite_in_inherated_class(self):
+        '''
+        overwrite this method in inherated class to set target class or method
+        or etc... to test.
+        '''
+        self._FigBoxCreater_class = None # Replcae FigBoxCreater Class
     
     def test_inheritance(self):
         # Target class is Abs_Fig_Box_Creater.
@@ -54,6 +66,7 @@ class TestFigBoxCreater(object):
         self.assertTrue(isinstance(figbox.get_fig_updater(), Callee))
         self.assertTrue(isinstance(figbox.get_up_caller(), Caller))
         self.assertTrue(isinstance(figbox.get_down_caller(), Caller))
+        
 
 class TestCMD_PRCR(object):
     '''
@@ -114,9 +127,10 @@ class Test_FigBox_CombinedTest():
 
 @add_msg
 class TestFigDataInputer_instance(TestForMethodExist, unittest.TestCase):
-    _class_method_pairs=((FigDataInputer, 'set_graph_data'),
-                         (FigDataInputer, 'update_graph')
-                         )
+    def class_attr_pairs_initialize(self):
+        self._class_method_pairs=((FigDataInputer, 'set_graph_data'),
+                                  (FigDataInputer, 'update_graph')
+                                  )
 
 @add_msg
 class TestFigDataInputer(unittest.TestCase):
