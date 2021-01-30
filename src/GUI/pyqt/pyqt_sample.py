@@ -10,11 +10,15 @@ import sys
 
 # 3rd party's module
 from PyQt5.QtCore import QSize, Qt
-from PyQt5.QtWidgets import QApplication, QMainWindow, QPushButton
+from PyQt5.QtWidgets import QApplication, QMainWindow, QPushButton, QWidget
 
 # Original module  
 
-button = QPushButton('Press Me')
+print(QWidget.__dict__.keys())
+
+class SampleWindow(QMainWindow):
+    def __init__(self):
+        button = QPushButton('Press Me')
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -25,9 +29,18 @@ class MainWindow(QMainWindow):
         
         self.setCentralWidget(button)
 
+
+window = MainWindow()
+print(window.window())
+print(window.isWindow())
+print(window.windowFlags())
+"""
 app = QApplication(sys.argv)
 
 window = MainWindow()
+print(window.window())
+print(QMainWindow.__dict__.keys())
+
 window.show()
 
 from PyQt5.QtCore import QT_VERSION_STR
@@ -37,3 +50,4 @@ print(QT_VERSION_STR)
 print(PYQT_VERSION_STR)
 
 app.exec_()
+"""

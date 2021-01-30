@@ -42,8 +42,12 @@ class PyQtDownCaller(Caller):
 
 class ButtonCreater(WidgetCreater):
     def __init__(self):
+        """
         self._button = QPushButton('test')
         print(self._button)
+        """
+        pass
     
     def get_widget(self):
-        return self._button
+        #return self._button
+        pass
