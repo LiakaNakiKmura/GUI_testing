@@ -14,7 +14,6 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QPushButton, QWidget
 
 # Original module  
 
-print(QWidget.__dict__.keys())
 
 class SampleWindow(QMainWindow):
     def __init__(self):
@@ -29,12 +28,6 @@ class MainWindow(QMainWindow):
         
         self.setCentralWidget(button)
 
-
-window = MainWindow()
-print(window.window())
-print(window.isWindow())
-print(window.windowFlags())
-"""
 app = QApplication(sys.argv)
 
 window = MainWindow()
@@ -48,6 +41,9 @@ from PyQt5.Qt import PYQT_VERSION_STR
 
 print(QT_VERSION_STR)
 print(PYQT_VERSION_STR)
+print(window.window())
+print(window.isWindow())
+print(window.windowFlags())
+
 
 app.exec_()
-"""

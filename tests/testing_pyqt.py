@@ -41,9 +41,9 @@ class Mock_MainWindow(QMainWindow):
 @add_msg
 class TestWidgetCreater(unittest.TestCase):
     def setUp(self):
+        self.app = QApplication(sys.argv)
         self.parent = Mock_MainWindow()
         self._target = MockWidgetCreater
-        self.app = QApplication(sys.argv)
     
     def test_set_parent(self):
         mock_widget_creater = self._target()
