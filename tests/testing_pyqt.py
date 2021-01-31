@@ -7,11 +7,12 @@ Created on Wed Jan 27 23:44:44 2021
 
 # Standard module
 import unittest
+import sys
 
 # 3rd party's module
 from context import src # path setting
 from testing_utility.unittest_util import cls_startstop_msg as add_msg
-from PyQt5.QtWidgets import (QPushButton, QMainWindow, QWidget)
+from PyQt5.QtWidgets import (QPushButton, QMainWindow, QWidget, QApplication)
 from PyQt5.QtCore import QObject
 
 
@@ -42,6 +43,7 @@ class TestWidgetCreater(unittest.TestCase):
     def setUp(self):
         self.parent = Mock_MainWindow()
         self._target = MockWidgetCreater
+        self.app = QApplication(sys.argv)
     
     def test_set_parent(self):
         mock_widget_creater = self._target()
@@ -80,6 +82,7 @@ class TestWidgetCreater(unittest.TestCase):
 class TestButtonCreater(unittest.TestCase):
     def setUp(self):
         self.button_creater = ButtonCreater()
+    
     
     def _test_button_chk(self):
         button =  self.button_creater.get_widget()
