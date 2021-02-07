@@ -13,5 +13,6 @@ services: xvfb
 dist: xenial
 
 script: 
+- pip install pytest pytest-qt
 - python -m unittest discover tests
 #- python -m unittest discover -s tests
