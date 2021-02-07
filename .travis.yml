@@ -6,8 +6,9 @@ install:
   - pip install pandas
   - pip install scipy
   - pip install PyQt5
-script: 
-- python -m unittest discover -s tests
 dist: xenial
 services:
   - xvfb
+script: 
+- xvfb-run make test
+- python -m unittest discover -s tests
