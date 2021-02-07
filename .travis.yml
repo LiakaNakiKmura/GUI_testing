@@ -9,11 +9,9 @@ install:
 before_install:
         - sudo apt-get install -y libdbus-1-3 libxkbcommon-x11-0
         - sudo apt install libxkbcommon-x11-0
-ldd `python -c 'import PyQt5; import os.path; print(os.path.join(os.path.dirname(PyQt5.__file__), "Qt", "plugins", "platforms", "libqxcb.so"))'` 
+services: xvfb
+dist: xenial
 
-#dist: xenial
-#services:
-#  - xvfb
 script: 
 - python -m unittest discover tests
 #- python -m unittest discover -s tests
