@@ -6,6 +6,10 @@ install:
   - pip install pandas
   - pip install scipy
   - pip install PyQt5
+addons:
+ apt:
+  packages:
+    - libxkbcommon-x11-0
 dist: xenial
 services:
   - xvfb
