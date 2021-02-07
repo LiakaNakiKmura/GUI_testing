@@ -14,5 +14,6 @@ dist: xenial
 
 script: 
 - pip install pytest pytest-qt
+- py.test -sv tests
 - python -m unittest discover tests
 #- python -m unittest discover -s tests
