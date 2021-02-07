@@ -15,5 +15,5 @@ ldd `python -c 'import PyQt5; import os.path; print(os.path.join(os.path.dirname
 #services:
 #  - xvfb
 script: 
-#- python -m unittest discover -s tests
 - python -m unittest discover tests
+#- python -m unittest discover -s tests
