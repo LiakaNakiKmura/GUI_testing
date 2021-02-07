@@ -6,13 +6,10 @@ install:
   - pip install pandas
   - pip install scipy
   - pip install PyQt5
-addons:
- apt:
-  packages:
-    - libxkbcommon-x11-0
+before_install:
+        - sudo apt-get install -y libdbus-1-3 libxkbcommon-x11-0
 dist: xenial
 services:
   - xvfb
 script: 
-- xvfb-run make test
 - python -m unittest discover -s tests
